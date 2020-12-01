@@ -1,4 +1,5 @@
-﻿using ForumBlog.Entities.Concrete;
+﻿using ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Mapping;
+using ForumBlog.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,11 @@ namespace ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new AppUserMap());
+            modelBuilder.ApplyConfiguration(new BlogMap());
+            modelBuilder.ApplyConfiguration(new CategoryBlogMap());
+            modelBuilder.ApplyConfiguration(new CategoryMap());
+            modelBuilder.ApplyConfiguration(new CommentMap());
         }
 
         public DbSet<AppUser> AppUsers { get; set; }
