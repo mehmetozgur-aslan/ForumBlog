@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ForumBlog.Business", "Forum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumBlog.WebApi", "ForumBlog.WebApi\ForumBlog.WebApi.csproj", "{44267736-63D7-4BA6-A7A4-9EC998BD10D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumBlog.DTO", "ForumBlog.DTO\ForumBlog.DTO.csproj", "{0D00E3DE-80AC-4125-8A62-4800BC43C019}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{44267736-63D7-4BA6-A7A4-9EC998BD10D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44267736-63D7-4BA6-A7A4-9EC998BD10D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44267736-63D7-4BA6-A7A4-9EC998BD10D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D00E3DE-80AC-4125-8A62-4800BC43C019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D00E3DE-80AC-4125-8A62-4800BC43C019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D00E3DE-80AC-4125-8A62-4800BC43C019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D00E3DE-80AC-4125-8A62-4800BC43C019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
