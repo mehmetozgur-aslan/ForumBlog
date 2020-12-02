@@ -20,6 +20,12 @@ namespace ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository
             await context.SaveChangesAsync();
         }
 
+        public async Task<TEntity> FindByIdAsync(int id)
+        {
+            using var context = new ForumBlogContext();
+            return await context.FindAsync<TEntity>(id);
+        }
+
         public async Task<List<TEntity>> GetAllAsync()
         {
             using var context = new ForumBlogContext();
@@ -32,7 +38,7 @@ namespace ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository
             return await context.Set<TEntity>().Where(filter).ToListAsync();
         }
 
-        public async Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, bool>> filter,Expression<Func<TEntity,TKey>> keySelector)
+        public async Task<List<TEntity>> GetAllAsync<TKey>(Expression<Func<TEntity, bool>> filter, Expression<Func<TEntity, TKey>> keySelector)
         {
             using var context = new ForumBlogContext();
             return await context.Set<TEntity>().Where(filter).OrderByDescending(keySelector).ToListAsync();
@@ -47,14 +53,14 @@ namespace ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
             using var context = new ForumBlogContext();
-           return await context.Set<TEntity>().FirstOrDefaultAsync(filter);
+            return await context.Set<TEntity>().FirstOrDefaultAsync(filter);
         }
 
         public async Task RemoveAsync(TEntity entity)
         {
             using var context = new ForumBlogContext();
             context.Remove(entity);
-           await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(TEntity entity)
