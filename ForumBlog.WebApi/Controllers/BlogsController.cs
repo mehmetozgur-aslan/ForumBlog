@@ -2,6 +2,7 @@
 using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.Entities.Concrete;
+using ForumBlog.WebApi.Enums;
 using ForumBlog.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace ForumBlog.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BlogsController : ControllerBase
+    public class BlogsController : BaseController
     {
         private readonly IBlogService _blogService;
         private readonly IMapper _mapper;
@@ -40,23 +41,16 @@ namespace ForumBlog.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddModel)
         {
-            if (blogAddModel.Image != null)
+            var uploadModel = await UploadFile(blogAddModel.Image, "image/jpeg");
+
+            if (uploadModel.UploadState == UploadState.Success)
             {
-                if (blogAddModel.Image.ContentType != "image/jpeg")
-                {
-                    return BadRequest("Uygunsuz dosya türü");
-                }
-
-                var newName = Guid.NewGuid() + Path.GetExtension(blogAddModel.Image.FileName);
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img" + newName);
-
-                var stream = new FileStream(path, FileMode.Create);
-                await blogAddModel.Image.CopyToAsync(stream);
-
-                blogAddModel.ImagePath = newName;
+                blogAddModel.ImagePath = uploadModel.NewName;
             }
-
-
+            else if (uploadModel.UploadState == UploadState.Error)
+            {
+                return BadRequest(uploadModel.ErrorMessage);
+            }
 
             await _blogService.AddAsync(_mapper.Map<Blog>(blogAddModel));
 
@@ -71,22 +65,16 @@ namespace ForumBlog.WebApi.Controllers
                 return BadRequest("geçersiz id");
             }
 
-            if (blogUpdateModel.Image != null)
+            var uploadModel = await UploadFile(blogUpdateModel.Image, "image/jpeg");
+
+            if (uploadModel.UploadState == UploadState.Success)
             {
-                if (blogUpdateModel.Image.ContentType != "image/jpeg")
-                {
-                    return BadRequest("Uygunsuz dosya türü");
-                }
-
-                var newName = Guid.NewGuid() + Path.GetExtension(blogUpdateModel.Image.FileName);
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img" + newName);
-
-                var stream = new FileStream(path, FileMode.Create);
-                await blogUpdateModel.Image.CopyToAsync(stream);
-
-                blogUpdateModel.ImagePath = newName;
+                blogUpdateModel.ImagePath = uploadModel.NewName;
             }
-
+            else if (uploadModel.UploadState == UploadState.Error)
+            {
+                return BadRequest(uploadModel.ErrorMessage);
+            }
 
             await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
 
