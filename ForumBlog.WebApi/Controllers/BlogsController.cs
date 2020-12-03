@@ -41,7 +41,7 @@ namespace ForumBlog.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddModel)
         {
-            var uploadModel = await UploadFile(blogAddModel.Image, "image/jpeg");
+            var uploadModel = await UploadFileAsync(blogAddModel.Image, "image/jpeg");
 
             if (uploadModel.UploadState == UploadState.Success)
             {
@@ -65,20 +65,33 @@ namespace ForumBlog.WebApi.Controllers
                 return BadRequest("geçersiz id");
             }
 
-            var uploadModel = await UploadFile(blogUpdateModel.Image, "image/jpeg");
+            var uploadModel = await UploadFileAsync(blogUpdateModel.Image, "image/jpeg");
 
             if (uploadModel.UploadState == UploadState.Success)
             {
-                blogUpdateModel.ImagePath = uploadModel.NewName;
+                var blog = await _blogService.FindByIdAsync(blogUpdateModel.Id);
+                blog.ShortDescription = blogUpdateModel.ShortDescription;
+                blog.Description = blogUpdateModel.Description;
+                blog.Title = blogUpdateModel.Title;
+                blog.ImagePath = uploadModel.NewName;
+
+                await _blogService.UpdateAsync(blog);
+                return NoContent();
             }
-            else if (uploadModel.UploadState == UploadState.Error)
+            else if (uploadModel.UploadState == UploadState.NotExist)
+            {
+                var blog = await _blogService.FindByIdAsync(blogUpdateModel.Id);
+                blog.ShortDescription = blogUpdateModel.ShortDescription;
+                blog.Description = blogUpdateModel.Description;
+                blog.Title = blogUpdateModel.Title;
+
+                await _blogService.UpdateAsync(blog);
+                return NoContent();
+            }
+            else
             {
                 return BadRequest(uploadModel.ErrorMessage);
             }
-
-            await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
