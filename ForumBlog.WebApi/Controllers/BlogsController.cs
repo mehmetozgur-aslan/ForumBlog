@@ -1,5 +1,8 @@
-﻿using ForumBlog.Business.Interface;
+﻿using AutoMapper;
+using ForumBlog.Business.Interface;
+using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.Entities.Concrete;
+using ForumBlog.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,40 +17,42 @@ namespace ForumBlog.WebApi.Controllers
     public class BlogsController : ControllerBase
     {
         private readonly IBlogService _blogService;
-        public BlogsController(IBlogService blogService)
+        private readonly IMapper _mapper;
+        public BlogsController(IBlogService blogService, IMapper mapper)
         {
             _blogService = blogService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _blogService.GetAllSortedByPostedTimeAsync());
+            return Ok(_mapper.Map<List<BlogListDto>>(await _blogService.GetAllSortedByPostedTimeAsync()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _blogService.FindByIdAsync(id));
+            return Ok(_mapper.Map<BlogListDto>(await _blogService.FindByIdAsync(id)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Blog blog)
+        public async Task<IActionResult> Create(BlogAddModel blogAddModel)
         {
-            await _blogService.AddAsync(blog);
+            await _blogService.AddAsync(_mapper.Map<Blog>(blogAddModel));
 
-            return Created("", blog);
+            return Created("", blogAddModel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Blog blog)
+        public async Task<IActionResult> Update(int id, BlogUpdateModel blogUpdateModel)
         {
-            if (id != blog.Id)
+            if (id != blogUpdateModel.Id)
             {
                 return BadRequest("geçersiz id");
             }
 
-            await _blogService.UpdateAsync(blog);
+            await _blogService.UpdateAsync(_mapper.Map<Blog>(blogUpdateModel));
 
             return NoContent();
         }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using ForumBlog.Business.Containers.MicrosoftIoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,7 @@ namespace ForumBlog.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddDepencencies();
             services.AddControllers();
         }
