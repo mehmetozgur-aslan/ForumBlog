@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ForumBlog.Business\ForumBlog.Business.csproj" />
+    <ProjectReference Include="..\ForumBlog.DTO\ForumBlog.DTO.csproj" />
   </ItemGroup>
 
 
