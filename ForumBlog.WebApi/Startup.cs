@@ -40,6 +40,7 @@ namespace ForumBlog.WebApi
             }
 
             app.UseRouting();
+            app.UseStaticFiles(); // wwwroot dýþarý açýlýr.
 
             app.UseAuthorization();
 
