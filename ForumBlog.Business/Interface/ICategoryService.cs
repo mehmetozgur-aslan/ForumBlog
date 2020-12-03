@@ -8,6 +8,6 @@ namespace ForumBlog.Business.Interface
 {
     public interface ICategoryService : IGenericService<Category>
     {
-        Task<List<Category>> GetAllSortedById();
+        Task<List<Category>> GetAllSortedByIdAsync();
     }
 }
