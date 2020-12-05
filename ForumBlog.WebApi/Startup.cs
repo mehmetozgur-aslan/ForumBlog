@@ -64,7 +64,7 @@ namespace ForumBlog.WebApi
 
             app.UseRouting();
             app.UseStaticFiles(); // wwwroot dýþarý açýlýr.
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

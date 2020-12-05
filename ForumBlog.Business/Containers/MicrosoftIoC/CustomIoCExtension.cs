@@ -1,5 +1,6 @@
 ﻿using ForumBlog.Business.Concrete;
 using ForumBlog.Business.Interface;
+using ForumBlog.Business.Tools.JwtTool;
 using ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository;
 using ForumBlog.DataAccess.Interface;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,12 @@ namespace ForumBlog.Business.Containers.MicrosoftIoC
 
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryDal, EfCategoryRepository>();
+
+            services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<IAppUserDal, EfAppUserRepository>();
+
+            services.AddScoped<IJwtService, JwtManager>();
+
 
         }
     }
