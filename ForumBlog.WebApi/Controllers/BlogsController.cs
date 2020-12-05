@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.BlogDtos;
+using ForumBlog.DTO.DTOs.CategoryBlogDtos;
 using ForumBlog.Entities.Concrete;
 using ForumBlog.WebApi.Enums;
 using ForumBlog.WebApi.Models;
@@ -103,6 +104,20 @@ namespace ForumBlog.WebApi.Controllers
         {
             await _blogService.RemoveAsync(new Blog { Id = id });
 
+            return NoContent();
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> AddToCategory(CategoryBlogDto categoryBlogDto)
+        {
+            await _blogService.AddToCategoryAsync(categoryBlogDto);
+            return Created("",categoryBlogDto);
+        }
+
+        [HttpDelete("[action]")]
+        public async Task<IActionResult> RemoveFromCategory(CategoryBlogDto categoryBlogDto)
+        {
+            await _blogService.RemoveFromCategoryAsync(categoryBlogDto);
             return NoContent();
         }
 

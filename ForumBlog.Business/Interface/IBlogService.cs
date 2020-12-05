@@ -1,4 +1,5 @@
-﻿using ForumBlog.Entities.Concrete;
+﻿using ForumBlog.DTO.DTOs.CategoryBlogDtos;
+using ForumBlog.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,7 @@ namespace ForumBlog.Business.Interface
     public interface IBlogService : IGenericService<Blog>
     {
         Task<List<Blog>> GetAllSortedByPostedTimeAsync();
+        Task AddToCategoryAsync(CategoryBlogDto categoryBlogDto);
+        Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto);
     }
 }
