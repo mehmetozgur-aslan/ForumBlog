@@ -1,9 +1,11 @@
 ﻿using ForumBlog.Business.Interface;
 using ForumBlog.DataAccess.Interface;
+using ForumBlog.DTO.DTOs.AppUserDtos;
 using ForumBlog.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ForumBlog.Business.Concrete
 {
@@ -14,6 +16,11 @@ namespace ForumBlog.Business.Concrete
         public AppUserManager(IGenericDal<AppUser> genericDal) : base(genericDal)
         {
             _genericDal = genericDal;
+        }
+
+        public async Task<AppUser> CheckUser(AppUserLoginDto appUserLoginDto)
+        {
+            return await _genericDal.GetAsync(x => x.UserName == appUserLoginDto.UserName && x.Password == appUserLoginDto.Password);
         }
     }
 }
