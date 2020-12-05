@@ -18,9 +18,14 @@ namespace ForumBlog.Business.Concrete
             _genericDal = genericDal;
         }
 
-        public async Task<AppUser> CheckUser(AppUserLoginDto appUserLoginDto)
+        public async Task<AppUser> CheckUserAsync(AppUserLoginDto appUserLoginDto)
         {
             return await _genericDal.GetAsync(x => x.UserName == appUserLoginDto.UserName && x.Password == appUserLoginDto.Password);
+        }
+
+        public async Task<AppUser> FindByNameAsync(string userName)
+        {
+            return await _genericDal.GetAsync(x => x.UserName == userName);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace ForumBlog.Business.Interface
 {
     public interface IAppUserService : IGenericService<AppUser>
     {
-        Task<AppUser> CheckUser(AppUserLoginDto appUserLoginDto);
+        Task<AppUser> CheckUserAsync(AppUserLoginDto appUserLoginDto);
+        Task<AppUser> FindByNameAsync(string userName);
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ForumBlog.Business.Interface;
 using ForumBlog.Business.Tools.JwtTool;
 using ForumBlog.DTO.DTOs.AppUserDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -27,7 +28,7 @@ namespace ForumBlog.WebApi.Controllers
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {
 
-            var user = await _appUserService.CheckUser(appUserLoginDto);
+            var user = await _appUserService.CheckUserAsync(appUserLoginDto);
 
             if (user != null)
             {
@@ -37,6 +38,16 @@ namespace ForumBlog.WebApi.Controllers
             }
 
             return BadRequest("Kullanıcı adı veya şifre hatalı");
+        }
+
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<IActionResult> ActiveUser()
+        {
+            var user = await _appUserService.FindByNameAsync(User.Identity.Name);
+
+            return Ok(new AppUserDto { Name = user.Name, SurName = user.SurName });
         }
 
     }
