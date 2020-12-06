@@ -66,5 +66,25 @@ namespace ForumBlog.WebApi.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetWithBlogsCount()
+        {
+            var categories = await _categoryService.GetAllWithCategoryBlogsAsync();
+
+            List<CategoryWithBlogsCountDto> listCategory = new List<CategoryWithBlogsCountDto>();
+
+            foreach (var category in categories)
+            {
+                CategoryWithBlogsCountDto categoryWithBlogsCountDto = new CategoryWithBlogsCountDto();
+                categoryWithBlogsCountDto.Category = category;
+                categoryWithBlogsCountDto.BlogsCount = category.CategoryBlogs.Count;
+
+                listCategory.Add(categoryWithBlogsCountDto);
+            }
+
+
+            return Ok(listCategory);
+        }
     }
 }

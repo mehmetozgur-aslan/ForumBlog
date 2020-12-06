@@ -9,5 +9,6 @@ namespace ForumBlog.Business.Interface
     public interface ICategoryService : IGenericService<Category>
     {
         Task<List<Category>> GetAllSortedByIdAsync();
+        Task<List<Category>> GetAllWithCategoryBlogsAsync();
     }
 }
