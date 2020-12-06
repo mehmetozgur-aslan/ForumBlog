@@ -2,6 +2,7 @@
 using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.CategoryDtos;
 using ForumBlog.Entities.Concrete;
+using ForumBlog.WebApi.CustomFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,7 @@ namespace ForumBlog.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Create([FromForm] CategoryAddDto categoryAddDto)
         {
             await _categoryService.AddAsync(_mapper.Map<Category>(categoryAddDto));
@@ -46,6 +48,7 @@ namespace ForumBlog.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Update(int id, [FromForm] CategoryUpdateDto categoryUpdateDto)
         {
             if (id != categoryUpdateDto.Id)

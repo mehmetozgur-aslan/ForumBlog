@@ -1,6 +1,7 @@
 ﻿using ForumBlog.Business.Interface;
 using ForumBlog.Business.Tools.JwtTool;
 using ForumBlog.DTO.DTOs.AppUserDtos;
+using ForumBlog.WebApi.CustomFilters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace ForumBlog.WebApi.Controllers
         }
 
         [HttpPost]
+        [ValidModel]
         public async Task<IActionResult> SignIn(AppUserLoginDto appUserLoginDto)
         {
 

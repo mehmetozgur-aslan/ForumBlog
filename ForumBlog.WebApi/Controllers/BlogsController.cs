@@ -3,6 +3,7 @@ using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.DTO.DTOs.CategoryBlogDtos;
 using ForumBlog.Entities.Concrete;
+using ForumBlog.WebApi.CustomFilters;
 using ForumBlog.WebApi.Enums;
 using ForumBlog.WebApi.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +43,7 @@ namespace ForumBlog.WebApi.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Create([FromForm] BlogAddModel blogAddModel)
         {
             var uploadModel = await UploadFileAsync(blogAddModel.Image, "image/jpeg");
@@ -62,6 +64,7 @@ namespace ForumBlog.WebApi.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
+        [ValidModel]
         public async Task<IActionResult> Update(int id, [FromForm] BlogUpdateModel blogUpdateModel)
         {
             if (id != blogUpdateModel.Id)
@@ -108,6 +111,7 @@ namespace ForumBlog.WebApi.Controllers
         }
 
         [HttpPost("[action]")]
+        [ValidModel]
         public async Task<IActionResult> AddToCategory(CategoryBlogDto categoryBlogDto)
         {
             await _blogService.AddToCategoryAsync(categoryBlogDto);
