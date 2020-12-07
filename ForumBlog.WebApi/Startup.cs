@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using ForumBlog.Business.Containers.MicrosoftIoC;
 using ForumBlog.Business.StringInfos;
 using ForumBlog.WebApi.CustomFilters;
@@ -53,7 +54,7 @@ namespace ForumBlog.WebApi
             services.AddControllers().AddNewtonsoftJson(opt =>
             {
                 opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-            });
+            }).AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,8 +1,13 @@
-﻿using ForumBlog.Business.Concrete;
+﻿using FluentValidation;
+using ForumBlog.Business.Concrete;
 using ForumBlog.Business.Interface;
 using ForumBlog.Business.Tools.JwtTool;
+using ForumBlog.Business.ValidationRules.FluentValidation;
 using ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository;
 using ForumBlog.DataAccess.Interface;
+using ForumBlog.DTO.DTOs.AppUserDtos;
+using ForumBlog.DTO.DTOs.CategoryBlogDtos;
+using ForumBlog.DTO.DTOs.CategoryDtos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -28,7 +33,10 @@ namespace ForumBlog.Business.Containers.MicrosoftIoC
 
             services.AddScoped<IJwtService, JwtManager>();
 
-
+            services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginValidator>();
+            services.AddTransient<IValidator<CategoryAddDto>, CategoryAddValidator>();
+            services.AddTransient<IValidator<CategoryBlogDto>, CategoryBlogValidator>();
+            services.AddTransient<IValidator<CategoryUpdateDto>, CategoryUpdateValidator>();
         }
     }
 }
