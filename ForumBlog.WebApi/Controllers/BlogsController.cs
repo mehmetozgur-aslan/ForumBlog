@@ -118,7 +118,7 @@ namespace ForumBlog.WebApi.Controllers
         public async Task<IActionResult> AddToCategory(CategoryBlogDto categoryBlogDto)
         {
             await _blogService.AddToCategoryAsync(categoryBlogDto);
-            return Created("",categoryBlogDto);
+            return Created("", categoryBlogDto);
         }
 
         [HttpDelete("[action]")]
@@ -126,6 +126,13 @@ namespace ForumBlog.WebApi.Controllers
         {
             await _blogService.RemoveFromCategoryAsync(categoryBlogDto);
             return NoContent();
+        }
+
+        [HttpGet("[action]/{id}")]
+        [ServiceFilter(typeof(ValidId<Blog>))]
+        public async Task<IActionResult> GetAllByCategoryId(int id)
+        {
+            return Ok(await _blogService.GetAllByCategoryIdAsync(id));
         }
 
     }
