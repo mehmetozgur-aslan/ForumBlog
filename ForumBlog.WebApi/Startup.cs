@@ -1,6 +1,7 @@
 using AutoMapper;
 using ForumBlog.Business.Containers.MicrosoftIoC;
 using ForumBlog.Business.StringInfos;
+using ForumBlog.WebApi.CustomFilters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace ForumBlog.WebApi
         {
             services.AddAutoMapper(typeof(Startup));
             services.AddDepencencies();
+            services.AddScoped(typeof(ValidId<>));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {

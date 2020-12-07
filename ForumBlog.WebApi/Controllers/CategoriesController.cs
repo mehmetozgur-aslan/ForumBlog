@@ -32,6 +32,7 @@ namespace ForumBlog.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(_mapper.Map<CategoryListDto>(await _categoryService.FindByIdAsync(id)));
@@ -49,6 +50,7 @@ namespace ForumBlog.WebApi.Controllers
         [HttpPut("{id}")]
         [Authorize]
         [ValidModel]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> Update(int id, [FromForm] CategoryUpdateDto categoryUpdateDto)
         {
             if (id != categoryUpdateDto.Id)
@@ -63,6 +65,7 @@ namespace ForumBlog.WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
+        [ServiceFilter(typeof(ValidId<Category>))]
         public async Task<IActionResult> Delete(int id)
         {
             await _categoryService.RemoveAsync(new Category { Id = id });
