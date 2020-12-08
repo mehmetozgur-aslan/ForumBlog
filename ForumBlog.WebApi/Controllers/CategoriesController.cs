@@ -83,7 +83,8 @@ namespace ForumBlog.WebApi.Controllers
             foreach (var category in categories)
             {
                 CategoryWithBlogsCountDto categoryWithBlogsCountDto = new CategoryWithBlogsCountDto();
-                categoryWithBlogsCountDto.Category = category;
+                categoryWithBlogsCountDto.CategoryId = category.Id;
+                categoryWithBlogsCountDto.CategoryName = category.Name;
                 categoryWithBlogsCountDto.BlogsCount = category.CategoryBlogs.Count;
 
                 listCategory.Add(categoryWithBlogsCountDto);
