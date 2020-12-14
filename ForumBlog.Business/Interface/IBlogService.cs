@@ -14,5 +14,6 @@ namespace ForumBlog.Business.Interface
         Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto);
         Task<List<Blog>> GetAllByCategoryIdAsync(int categoryId);
         Task<List<Category>> GetCategoriesAsync(int blogId);
+        Task<List<Blog>> GetLastFiveAsync();
     }
 }

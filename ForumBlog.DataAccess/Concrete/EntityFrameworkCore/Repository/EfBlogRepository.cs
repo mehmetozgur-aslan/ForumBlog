@@ -51,5 +51,10 @@ namespace ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository
             }).ToListAsync();
         }
 
+        public async Task<List<Blog>> GetLastFiveAsync()
+        {
+            using var context = new ForumBlogContext();
+            return await context.Blogs.OrderByDescending(x => x.PostedTime).Take(5).ToListAsync();
+        }
     }
 }

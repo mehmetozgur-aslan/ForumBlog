@@ -50,6 +50,11 @@ namespace ForumBlog.Business.Concrete
             return await _blogDal.GetCategoriesAsync(blogId);
         }
 
+        public async Task<List<Blog>> GetLastFiveAsync()
+        {
+            return await _blogDal.GetLastFiveAsync();
+        }
+
         public async Task RemoveFromCategoryAsync(CategoryBlogDto categoryBlogDto)
         {
             var categoryBlog = await _categoryBlogService.GetAsync(x => x.CategoryId == categoryBlogDto.CategoryId && x.BlogId == categoryBlogDto.BlogId);

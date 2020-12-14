@@ -142,6 +142,11 @@ namespace ForumBlog.WebApi.Controllers
         {
             return Ok(_mapper.Map<List<CategoryListDto>>(await _blogService.GetCategoriesAsync(id)));
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetLastFive()
+        {
+            return Ok(_mapper.Map<List<BlogListDto>>(await _blogService.GetLastFiveAsync()));
+        }
 
     }
 }
