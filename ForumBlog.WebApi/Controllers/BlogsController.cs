@@ -2,6 +2,7 @@
 using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.DTO.DTOs.CategoryBlogDtos;
+using ForumBlog.DTO.DTOs.CategoryDtos;
 using ForumBlog.Entities.Concrete;
 using ForumBlog.WebApi.CustomFilters;
 using ForumBlog.WebApi.Enums;
@@ -133,6 +134,13 @@ namespace ForumBlog.WebApi.Controllers
         public async Task<IActionResult> GetAllByCategoryId(int id)
         {
             return Ok(await _blogService.GetAllByCategoryIdAsync(id));
+        }
+
+        [HttpGet("{id}/[action]")]
+        [ServiceFilter(typeof(ValidId<Blog>))]
+        public async Task<IActionResult> GetCategories(int id)
+        {
+            return Ok(_mapper.Map<List<CategoryListDto>>(await _blogService.GetCategoriesAsync(id)));
         }
 
     }

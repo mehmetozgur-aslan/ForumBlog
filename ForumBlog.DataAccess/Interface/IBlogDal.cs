@@ -9,5 +9,6 @@ namespace ForumBlog.DataAccess.Interface
     public interface IBlogDal : IGenericDal<Blog>
     {
         Task<List<Blog>> GetAllByCategoryId(int categoryId);
+        Task<List<Category>> GetCategoriesAsync(int blogId);
     }
 }
