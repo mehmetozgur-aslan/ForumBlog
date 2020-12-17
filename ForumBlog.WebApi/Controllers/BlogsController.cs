@@ -3,6 +3,7 @@ using ForumBlog.Business.Interface;
 using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.DTO.DTOs.CategoryBlogDtos;
 using ForumBlog.DTO.DTOs.CategoryDtos;
+using ForumBlog.DTO.DTOs.CommentDtos;
 using ForumBlog.Entities.Concrete;
 using ForumBlog.WebApi.CustomFilters;
 using ForumBlog.WebApi.Enums;
@@ -23,10 +24,12 @@ namespace ForumBlog.WebApi.Controllers
     public class BlogsController : BaseController
     {
         private readonly IBlogService _blogService;
+        private readonly ICommentService _commentService;
         private readonly IMapper _mapper;
-        public BlogsController(IBlogService blogService, IMapper mapper)
+        public BlogsController(IBlogService blogService, ICommentService commentService, IMapper mapper)
         {
             _blogService = blogService;
+            _commentService = commentService;
             _mapper = mapper;
         }
 
@@ -148,5 +151,10 @@ namespace ForumBlog.WebApi.Controllers
             return Ok(_mapper.Map<List<BlogListDto>>(await _blogService.GetLastFiveAsync()));
         }
 
+        [HttpGet("{id}/[action]")]
+        public async Task<IActionResult> GetComments([FromRoute] int id, [FromQuery] int? parentCommentId)
+        {
+            return Ok(_mapper.Map<List<CommentListDto>>(await _commentService.GetAllWithSubCommentsAsync(id, parentCommentId)));
+        }
     }
 }

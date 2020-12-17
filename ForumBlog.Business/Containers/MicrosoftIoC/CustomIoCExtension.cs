@@ -25,6 +25,9 @@ namespace ForumBlog.Business.Containers.MicrosoftIoC
             services.AddScoped<IBlogService, BlogManager>();
             services.AddScoped<IBlogDal, EfBlogRepository>();
 
+            services.AddScoped<ICommentService, CommentManager>();
+            services.AddScoped<ICommentDal, EfCommentRepository>();
+
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryDal, EfCategoryRepository>();
 

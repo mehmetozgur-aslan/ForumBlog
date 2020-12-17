@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ForumBlog.DTO.DTOs.BlogDtos;
 using ForumBlog.DTO.DTOs.CategoryDtos;
+using ForumBlog.DTO.DTOs.CommentDtos;
 using ForumBlog.Entities.Concrete;
 using ForumBlog.WebApi.Models;
 using System;
@@ -31,6 +32,9 @@ namespace ForumBlog.WebApi.Mapping.AutoMapper
 
             CreateMap<Category, CategoryUpdateDto>();
             CreateMap<CategoryUpdateDto, Category>();
+
+            CreateMap<Comment, CommentListDto>();
+            CreateMap<CommentListDto, Comment>();
         }
     }
 }
