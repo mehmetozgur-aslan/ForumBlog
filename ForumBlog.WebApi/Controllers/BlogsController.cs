@@ -156,5 +156,12 @@ namespace ForumBlog.WebApi.Controllers
         {
             return Ok(_mapper.Map<List<CommentListDto>>(await _commentService.GetAllWithSubCommentsAsync(id, parentCommentId)));
         }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> Search([FromQuery] string s)
+        {
+            return Ok(_mapper.Map<List<BlogListDto>>(await _blogService.SearchAsync(s)));
+        }
+
     }
 }

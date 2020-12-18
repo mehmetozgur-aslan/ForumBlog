@@ -64,5 +64,10 @@ namespace ForumBlog.Business.Concrete
                 await _categoryBlogService.RemoveAsync(categoryBlog);
             }
         }
+
+        public async Task<List<Blog>> SearchAsync(string searchString)
+        {
+           return await _blogDal.GetAllAsync(x => x.Title.Contains(searchString) || x.ShortDescription.Contains(searchString) || x.Description.Contains(searchString), x => x.PostedTime);
+        }
     }
 }
