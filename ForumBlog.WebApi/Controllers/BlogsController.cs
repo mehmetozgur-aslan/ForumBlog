@@ -112,7 +112,8 @@ namespace ForumBlog.WebApi.Controllers
         [ServiceFilter(typeof(ValidId<Blog>))]
         public async Task<IActionResult> Delete(int id)
         {
-            await _blogService.RemoveAsync(new Blog { Id = id });
+            var blog = await _blogService.FindByIdAsync(id);
+            await _blogService.RemoveAsync(blog);
 
             return NoContent();
         }
