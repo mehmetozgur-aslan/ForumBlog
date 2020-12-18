@@ -163,5 +163,14 @@ namespace ForumBlog.WebApi.Controllers
             return Ok(_mapper.Map<List<BlogListDto>>(await _blogService.SearchAsync(s)));
         }
 
+        [HttpPost("[action]")]
+        [ValidModel]
+        public async Task<IActionResult> AddComment(CommentAddDto commentAddDto)
+        {
+            commentAddDto.PostedTime = DateTime.Now;
+            await _commentService.AddAsync(_mapper.Map<Comment>(commentAddDto));
+            return Created("", commentAddDto);
+        }
+
     }
 }

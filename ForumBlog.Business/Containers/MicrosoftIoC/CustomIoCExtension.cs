@@ -9,6 +9,7 @@ using ForumBlog.DataAccess.Interface;
 using ForumBlog.DTO.DTOs.AppUserDtos;
 using ForumBlog.DTO.DTOs.CategoryBlogDtos;
 using ForumBlog.DTO.DTOs.CategoryDtos;
+using ForumBlog.DTO.DTOs.CommentDtos;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace ForumBlog.Business.Containers.MicrosoftIoC
             services.AddTransient<IValidator<CategoryAddDto>, CategoryAddValidator>();
             services.AddTransient<IValidator<CategoryBlogDto>, CategoryBlogValidator>();
             services.AddTransient<IValidator<CategoryUpdateDto>, CategoryUpdateValidator>();
+            services.AddTransient<IValidator<CommentAddDto>, CommentAddValidator>();
         }
     }
 }

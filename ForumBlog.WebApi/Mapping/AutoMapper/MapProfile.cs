@@ -35,6 +35,9 @@ namespace ForumBlog.WebApi.Mapping.AutoMapper
 
             CreateMap<Comment, CommentListDto>();
             CreateMap<CommentListDto, Comment>();
+
+            CreateMap<Comment, CommentAddDto>();
+            CreateMap<CommentAddDto, Comment>();
         }
     }
 }
