@@ -2,6 +2,7 @@
 using ForumBlog.Business.Concrete;
 using ForumBlog.Business.Interface;
 using ForumBlog.Business.Tools.JwtTool;
+using ForumBlog.Business.Tools.LogTool;
 using ForumBlog.Business.ValidationRules.FluentValidation;
 using ForumBlog.DataAccess.Concrete.EntityFrameworkCore.Repository;
 using ForumBlog.DataAccess.Interface;
@@ -35,6 +36,8 @@ namespace ForumBlog.Business.Containers.MicrosoftIoC
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
 
             services.AddScoped<IJwtService, JwtManager>();
+
+            services.AddScoped<ICustomLogger, NLogAdapter>();
 
             services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginValidator>();
             services.AddTransient<IValidator<CategoryAddDto>, CategoryAddValidator>();

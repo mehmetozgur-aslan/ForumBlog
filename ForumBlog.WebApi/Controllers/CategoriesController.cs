@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using ForumBlog.Business.Interface;
+using ForumBlog.Business.Tools.LogTool;
 using ForumBlog.DTO.DTOs.CategoryDtos;
 using ForumBlog.Entities.Concrete;
 using ForumBlog.WebApi.CustomFilters;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,10 +21,12 @@ namespace ForumBlog.WebApi.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
-        public CategoriesController(ICategoryService categoryService, IMapper mapper)
+        private readonly ICustomLogger _customLogger;
+        public CategoriesController(ICategoryService categoryService, IMapper mapper, ICustomLogger customLogger)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _customLogger = customLogger;
         }
 
         [HttpGet]
@@ -92,6 +96,17 @@ namespace ForumBlog.WebApi.Controllers
 
 
             return Ok(listCategory);
+        }
+
+        [Route("/Error")]
+
+        public IActionResult Error()
+        {
+            var errorInfo = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            _customLogger.LogError($"\nHatanın oluştuğu yer:{errorInfo.Path}\n Hata mesajı: {errorInfo.Error.Message}\n Stack Trace : {errorInfo.Error.StackTrace}");
+
+            return Problem("Bir hata oluştu.");
         }
     }
 }
